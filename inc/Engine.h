@@ -1,6 +1,7 @@
-#ifndef INC_3DGRAPHICS_APP_H
-# define INC_3DGRAPHICS_APP_H
+#ifndef INC_3DGRAPHICS_ENGINE_H
+# define INC_3DGRAPHICS_ENGINE_H
 
+# include "3DGraphics.h"
 # include "Window.h"
 
 class Engine {
@@ -22,4 +23,4 @@ private:
     bool m_isRunning = false;
 };
 
-#endif //INC_3DGRAPHICS_APP_H
+#endif //INC_3DGRAPHICS_ENGINE_H

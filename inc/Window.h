@@ -1,14 +1,7 @@
 #ifndef INC_3DGRAPHICS_WINDOW_H
 # define INC_3DGRAPHICS_WINDOW_H
 
-# include <iostream>
-# include <memory>
-# include <optional>
-# include <functional>
-# include <SDL2/SDL.h>
-
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
+# include "3DGraphics.h"
 
 class Window {
     using STL_win_uptr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;

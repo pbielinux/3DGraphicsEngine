@@ -13,5 +13,6 @@ add_executable(${PROJECT_NAME}
         main.cpp
         Window.cpp
         Engine.cpp
+        Buffer.cpp
         )
 target_link_libraries(Graphs ${SDL2_LIBRARIES})
