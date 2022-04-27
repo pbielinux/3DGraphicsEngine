@@ -12,12 +12,12 @@ public:
     bool setup();
     void stop();
 
-    void process_input();
-    void update();
-    void render();
+    virtual void process_input();
+    virtual void update();
+    virtual void render();
 
 private:
-    Window m_window;
+    Window* m_window;
     SDL_Renderer *m_renderer;
     bool m_isRunning = false;
 };

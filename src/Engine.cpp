@@ -11,15 +11,15 @@ bool Engine::setup() {
     std::cout << "[INFO] STL successfully inited" << std::endl;
 
     // Init Window
-    m_window = Window();
-    if (!m_window.createWindow()) {
+    m_window = new Window();
+    if (!m_window->createWindow()) {
         std::cout << "[ERROR] Initialising Window" << std::endl;
         return (false);
     }
     std::cout << "[INFO] STL Window created" << std::endl;
 
     // Init Renderer
-    m_renderer = SDL_CreateRenderer(m_window.getAddress(), -1, 0);
+    m_renderer = SDL_CreateRenderer(m_window->getAddress(), -1, 0);
     if (!m_renderer) {
         std::cout << "[ERROR] Creating STL renderer" << std::endl;
         return (false);

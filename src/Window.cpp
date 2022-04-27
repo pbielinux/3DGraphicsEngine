@@ -5,8 +5,8 @@ Window::Window():
     m_name = "";
     m_x = SDL_WINDOWPOS_CENTERED;
     m_y = SDL_WINDOWPOS_CENTERED;
-    m_w = 800;
-    m_h = 600;
+    m_w = WIN_WIDTH;
+    m_h = WIN_HEIGHT;
     m_flags = SDL_WINDOW_BORDERLESS;
 };
 

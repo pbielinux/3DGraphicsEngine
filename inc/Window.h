@@ -7,6 +7,9 @@
 # include <functional>
 # include <SDL2/SDL.h>
 
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 600
+
 class Window {
     using STL_win_uptr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
 
