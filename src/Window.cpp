@@ -1,53 +1,37 @@
 #include "Window.h"
 
-Window::Window():
-        m_window(nullptr, SDL_DestroyWindow){
-    m_name = "";
-    m_x = SDL_WINDOWPOS_CENTERED;
-    m_y = SDL_WINDOWPOS_CENTERED;
-    m_w = WIN_WIDTH;
-    m_h = WIN_HEIGHT;
-    m_flags = SDL_WINDOW_BORDERLESS;
+//Window::Window() {
+//    _data.name = "";
+//    _data.x = SDL_WINDOWPOS_CENTERED;
+//    _data.y = SDL_WINDOWPOS_CENTERED;
+//    _data.w = WIN_WIDTH;
+//    _data.h = WIN_HEIGHT;
+//    _data.flags = SDL_WINDOW_BORDERLESS;
+//    createWindow();
+//    _buffer = std::make_shared<Buffer>(_data.w, _data.h);
+//};
+
+Window::Window(std::string name, int x, int y, int w, int h, Uint32 flags):
+        _data{ .name = name, .x = x, .y = y, .w = w, .h = h, .flags = flags} {
+    createWindow();
+    _buffer = std::make_shared<Buffer>(_data.w, _data.h);
 };
 
-Window::Window(int w, int h):
-        m_window(nullptr, SDL_DestroyWindow), m_w(w), m_h(h) {
-    m_name = "";
-    m_x = SDL_WINDOWPOS_CENTERED;
-    m_y = SDL_WINDOWPOS_CENTERED;
-    m_flags = SDL_WINDOW_BORDERLESS;
-};
-
-Window::Window(std::string& name, int w, int h):
-        m_window(nullptr, SDL_DestroyWindow), m_name(std::move(name)), m_w(w), m_h(h) {
-    m_x = SDL_WINDOWPOS_CENTERED;
-    m_y = SDL_WINDOWPOS_CENTERED;
-    m_flags = SDL_WINDOW_BORDERLESS;
-};
-
-Window::Window(std::string& name, int x, int y, int w, int h):
-        m_window(nullptr, SDL_DestroyWindow), m_name(std::move(name)), m_x(x), m_y(y), m_w(w), m_h(h) {
-    m_flags = SDL_WINDOW_BORDERLESS;
-};
-
-Window::Window(std::string& name, int x, int y, int w, int h, Uint32 flags):
-        m_window(nullptr, SDL_DestroyWindow), m_name(std::move(name)), m_x(x), m_y(y), m_w(w), m_h(h), m_flags(flags) {
-};
-
-bool Window::isCreated() { return(m_created); }
-
-SDL_Window* Window::getAddress() {
-    return m_window.get();
+Window::~Window() {
+    SDL_DestroyWindow(_data.address);
 }
 
-bool Window::createWindow() {
-    if (this->isCreated()) return (false);
+SDL_Window* Window::getAddress() {
+    return (_data.address);
+}
 
-    m_window = STL_win_uptr(SDL_CreateWindow(m_name.c_str(), m_x, m_y, m_w, m_h, m_flags),
-                                                                         SDL_DestroyWindow);
-    if (m_window == nullptr) {
-        return (false);
-    }
-    m_created = true;
-    return (true);
+void Window::createWindow() {
+    _data.address = SDL_CreateWindow(_data.name.c_str(),
+                                _data.x, _data.y,
+                                _data.w, _data.h,
+                                _data.flags);
+    if (!_data.address) {
+        std::cout << "[ERROR] Creating SDL Window" << std::endl;
+    } else
+        std::cout << "[INFO] SDL Window created" << std::endl;
 }

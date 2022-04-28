@@ -7,7 +7,6 @@
 int main() {
     Engine engine;
 
-    engine.setup();
     while (engine.isRunning()) {
         engine.process_input();
         engine.update();

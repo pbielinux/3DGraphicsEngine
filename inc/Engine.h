@@ -6,11 +6,10 @@
 
 class Engine {
 public:
-    Engine() {};
-    ~Engine() {};
+    Engine();
+    ~Engine();
 
     bool isRunning();
-    bool setup();
     void stop();
 
     virtual void process_input();
@@ -18,8 +17,8 @@ public:
     virtual void render();
 
 private:
-    Window* m_window;
-    SDL_Renderer *m_renderer;
+    std::shared_ptr<Window> m_window;
+    std::shared_ptr<SDL_Renderer> m_renderer;
     bool m_isRunning = false;
 };
 

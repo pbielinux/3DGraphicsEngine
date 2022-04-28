@@ -1,35 +1,34 @@
 #include "Engine.h"
 
-bool Engine::isRunning() { return (m_isRunning); };
-
-bool Engine::setup() {
+Engine::Engine() {
     // Init SDL
     if (SDL_Init(SDL_INIT_EVERYTHING)) {
         std::cout << "[ERROR] Initialising SDL" << std::endl;
-        return (false);
-    };
-    std::cout << "[INFO] STL successfully inited" << std::endl;
+    } else
+        std::cout << "[INFO] SDL successfully inited" << std::endl;
 
     // Init Window
-    m_window = new Window();
-    if (!m_window->createWindow()) {
-        std::cout << "[ERROR] Initialising Window" << std::endl;
-        return (false);
-    }
-    std::cout << "[INFO] STL Window created" << std::endl;
+    m_window = std::make_shared<Window>();
 
     // Init Renderer
-    m_renderer = SDL_CreateRenderer(m_window->getAddress(), -1, 0);
-    if (!m_renderer) {
-        std::cout << "[ERROR] Creating STL renderer" << std::endl;
-        return (false);
-    }
-    std::cout << "[INFO] Renderer successfully created" << std::endl;
+    m_renderer = std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(m_window->getAddress(), -1, 0),
+                                                SDL_DestroyRenderer);
+    if (!m_renderer.get()) {
+        std::cout << "[ERROR] Creating SDL renderer" << std::endl;
+    } else
+        std::cout << "[INFO] Renderer successfully created" << std::endl;
+
+
     m_isRunning = true;
-    return (true);
 }
 
-void Engine::stop() { m_isRunning = false; };
+Engine::~Engine() {
+    SDL_Quit();
+}
+
+bool Engine::isRunning() { return (m_isRunning); }
+
+void Engine::stop() { m_isRunning = false; }
 
 void Engine::process_input() {
     SDL_Event event;
@@ -56,8 +55,8 @@ void Engine::update() {
 }
 
 void Engine::render() {
-    SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-    SDL_RenderClear(m_renderer);
+    SDL_SetRenderDrawColor(m_renderer.get(), 255, 0, 0, 255);
+    SDL_RenderClear(m_renderer.get());
     //...
-    SDL_RenderPresent(m_renderer);
+    SDL_RenderPresent(m_renderer.get());
 }
