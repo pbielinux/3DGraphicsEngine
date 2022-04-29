@@ -7,7 +7,8 @@
 int main() {
     Engine engine;
 
-    while (engine.isRunning()) {
+    engine.init();
+    while (engine.isRunning) {
         engine.process_input();
         engine.update();
         engine.render();

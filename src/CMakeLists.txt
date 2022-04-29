@@ -11,8 +11,11 @@ include_directories(../inc)
 # Sources & Paths ----------------------------------------------------------------------------------
 add_executable(${PROJECT_NAME}
         main.cpp
-        Window.cpp
         Engine.cpp
         Buffer.cpp
+        Renderer.cpp
+        Initializer.cpp
+        initializers/sdl_init.cpp
+        initializers/sdl_window_init.cpp
         )
 target_link_libraries(Graphs ${SDL2_LIBRARIES})

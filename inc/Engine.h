@@ -1,25 +1,30 @@
 #ifndef INC_3DGRAPHICS_ENGINE_H
 # define INC_3DGRAPHICS_ENGINE_H
 
-# include "3DGraphics.h"
-# include "Window.h"
+# include <memory>
+# include "Initializer.h"
+# include "initializers/sdl_init.h"
+# include "initializers/sdl_window_init.h"
+# include "Renderer.h"
 
 class Engine {
 public:
     Engine();
     ~Engine();
 
-    bool isRunning();
-    void stop();
+    void init();
 
-    virtual void process_input();
-    virtual void update();
-    virtual void render();
+    void process_input();
+    void update();
+    void render();
 
+    bool isRunning;
 private:
-    std::shared_ptr<Window> m_window;
-    std::shared_ptr<SDL_Renderer> m_renderer;
-    bool m_isRunning = false;
+    Startup _startup;
+    std::shared_ptr<SDLInitializer> _sdl_init;
+    std::shared_ptr<SDLWindowInitializer> _sdl_window_init;
+
+    Renderer _renderer;
 };
 
 #endif //INC_3DGRAPHICS_ENGINE_H
