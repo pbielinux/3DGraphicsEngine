@@ -6,6 +6,7 @@
 # include "initializers/sdl_init.h"
 # include "initializers/sdl_window_init.h"
 # include "Renderer.h"
+# include "Buffer.h"
 
 class Engine {
 public:

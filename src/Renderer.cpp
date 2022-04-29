@@ -1,5 +1,8 @@
 #include "Renderer.h"
 
+Renderer::Renderer(): _renderer(nullptr) {
+}
+
 void Renderer::set_renderer(SDL_Renderer *renderer) {
     _renderer = renderer;
 }

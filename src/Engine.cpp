@@ -5,7 +5,7 @@ using namespace std;
 Engine::Engine():
         _sdl_init(make_shared<SDLInitializer>()),
         _sdl_window_init(make_shared<SDLWindowInitializer>(640, 480, false, false)) {
-    _startup.add_initializer(_sdl_init);
+            _startup.add_initializer(_sdl_init);
     _startup.add_initializer(_sdl_window_init);
 }
 
@@ -15,6 +15,8 @@ Engine::~Engine() {
 
 void Engine::init() {
     _startup.init();
+    _renderer.set_renderer(_sdl_window_init->renderer());
+
 }
 
 void Engine::process_input() {

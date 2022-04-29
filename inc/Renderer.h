@@ -3,10 +3,16 @@
 
 # include <iostream>
 # include <SDL.h>
+# include "Buffer.h"
+
 
 class Renderer {
 public:
+    Renderer();
+
     void set_renderer(SDL_Renderer *renderer);
+
+    void render_color_buffer(Buffer& color_buffer, SDL_Texture* texture);
 
     bool clear();
     void present();
