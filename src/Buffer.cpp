@@ -20,7 +20,7 @@ uint32_t Buffer::getPixel(int x, int y) {
 };
 
 void Buffer::set_pixel(int x, int y, uint32_t color) {
-    if ((win_width * y) + x < win_width * win_height)
+    if (x < win_width && y < win_height)
         _color_buffer[(win_width * y) + x] = color;
 };
 
