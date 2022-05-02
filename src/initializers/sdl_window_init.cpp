@@ -1,18 +1,27 @@
 #include "initializers/sdl_window_init.h"
 
-SDLWindowInitializer::SDLWindowInitializer(int width, int height, bool fullscreen, bool resizable):
+SDLWindowInitializer::SDLWindowInitializer(bool fullscreen, bool resizable, int width, int height) :
         _width(width), _height(height), _fullscreen(fullscreen), _resizable(resizable),
-        _window(nullptr), _renderer(nullptr), _buffer(width, height) {
+        _window(nullptr), _renderer(nullptr) {
 };
 
 void SDLWindowInitializer::setup() {
     uint32_t flags = 0;
 
-    if (_fullscreen) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+    SDL_GetCurrentDisplayMode(0, &_display);
+    if (_fullscreen) {
+        _width = _display.w;
+        _height = _display.h;
+        flags |= SDL_WINDOW_FULLSCREEN;
+    }
     if (_resizable) flags |= SDL_WINDOW_RESIZABLE;
-
-    if (SDL_CreateWindowAndRenderer(_width, _height, flags, &_window, &_renderer) != 0)
-        std::cout << "[ERROR] Creating SDL Window and Renderer" << std::endl;
+    if(!(_window = SDL_CreateWindow("",
+                               SDL_WINDOWPOS_CENTERED,
+                               SDL_WINDOWPOS_CENTERED,
+                               _width, _height, flags)))
+        std::cout << "[ERROR] Creating SDL Window" << std::endl;
+    if (!(_renderer = SDL_CreateRenderer(_window, -1, flags)))
+        std::cout << "[ERROR] Creating SDL Renderer" << std::endl;
 }
 
 void SDLWindowInitializer::teardown() {
@@ -28,10 +37,6 @@ SDL_Window *SDLWindowInitializer::window() const {
 
 SDL_Renderer *SDLWindowInitializer::renderer() const {
     return _renderer;
-}
-
-Buffer &SDLWindowInitializer::buffer() {
-    return _buffer;
 }
 
 int SDLWindowInitializer::width() const {
