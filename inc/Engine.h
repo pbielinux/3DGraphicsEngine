@@ -7,6 +7,7 @@
 # include "initializers/sdl_window_init.h"
 # include "Renderer.h"
 # include "Buffer.h"
+# include "vectors/vectors.h"
 
 class Engine {
 public:

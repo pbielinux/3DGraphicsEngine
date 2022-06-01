@@ -35,10 +35,27 @@ void Renderer::draw_rect(int x, int y, int width, int height, uint32_t color) {
     }
 };
 
-void Renderer::draw_grid(int size) {
+void Renderer::draw_grid(int size, uint32_t color) {
     for (int y = 0; y < _buffer.heigth(); y += size) {
         for (int x = 0; x < _buffer.width(); x += size) {
-            _buffer.set_pixel(x, y, 0xFF555555);
+            _buffer.set_pixel(x, y, color);
         }
     }
+};
+
+void Renderer::draw(std::vector<Vec2<float>> pos, uint32_t color) {
+    for (auto vec : pos) {
+        _buffer.set_pixel(vec.x, vec.y, color);
+    }
+};
+
+std::vector<Vec2<float>> Renderer::project(std::vector<Vec3<float>> vectors) {
+    std::vector<Vec2<float>> vec2;
+
+    for (auto vec3 : vectors) {
+        Vec2<float> new_vec(vec3.x * 128 , vec3.y * 128);
+        vec2.push_back(new_vec);
+    }
+
+    return (vec2);
 };
